@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
-import { SCENE_COLLECTION } from "../constants.js";
+import {
+  CONTENT_COLLECTION,
+  SCENE_COLLECTION,
+  TARGET_COLLECTION,
+  USER_COLLECTION,
+} from "../constants.js";
 
 const Schema = mongoose.Schema;
 
@@ -16,15 +21,17 @@ const sceneSchema = new Schema({
     type: String,
     required: true,
   },
-  targets: {
+  targetAndContents: {
     type: [
       {
         targetId: {
-          type: String,
+          type: Schema.Types.ObjectId,
+          ref: TARGET_COLLECTION,
           required: true,
         },
         contentId: {
-          type: String,
+          type: Schema.Types.ObjectId,
+          ref: CONTENT_COLLECTION,
           required: true,
         },
         position: {
@@ -70,7 +77,8 @@ const sceneSchema = new Schema({
     default: true,
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: USER_COLLECTION,
     required: true,
   },
   createdAt: {

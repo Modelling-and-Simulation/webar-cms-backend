@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { TARGET_COLLECTION } from "../constants.js";
+import { TARGET_COLLECTION, USER_COLLECTION } from "../constants.js";
 
 const Schema = mongoose.Schema;
 
@@ -21,7 +21,8 @@ const targetSchema = new Schema({
     default: true,
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: USER_COLLECTION,
     required: true,
   },
   createdAt: {

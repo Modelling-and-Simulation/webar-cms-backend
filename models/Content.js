@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { CONTENT_COLLECTION } from "../constants.js";
+import { CONTENT_COLLECTION, USER_COLLECTION } from "../constants.js";
 
 const Schema = mongoose.Schema;
 
@@ -13,6 +13,10 @@ const contentSchema = new Schema({
     default: "No description provided",
   },
   contentType: {
+    type: String,
+    required: true,
+  },
+  contentImage: {
     type: String,
     required: true,
   },
@@ -31,7 +35,8 @@ const contentSchema = new Schema({
     default: true,
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: USER_COLLECTION,
     required: true,
   },
   createdAt: {
