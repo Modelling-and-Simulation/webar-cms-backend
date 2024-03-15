@@ -1,0 +1,15 @@
+public/*/*.jpg
+public/*/*.png
+public/*/*.jpeg
+public/*/*.webp
+public/*/*.mind
+public/*/*.glb
+
+
+node_modules
+logs
+
+.env
+*.sqlite
+
+.DS_Store
