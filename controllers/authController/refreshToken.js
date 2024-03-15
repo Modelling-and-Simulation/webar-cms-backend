@@ -57,7 +57,7 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
 
       // generate new access token
       const roleName = getRoleName(foundUser.role);
-      console.log("roleName", foundUser.role, roleName);
+      
       const accessToken = jwt.sign(
         {
           UserInfo: {

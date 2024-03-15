@@ -7,7 +7,6 @@ const contentSchema = new Schema({
   contentName: {
     type: String,
     required: true,
-    unique: true,
   },
   description: {
     type: String,

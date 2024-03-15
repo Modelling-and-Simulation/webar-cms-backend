@@ -17,11 +17,20 @@ const createContent = asyncHandler(async (req, res) => {
       throw new Error("Description is required");
     }
 
-    // remove starting and ending spaces and replace spaces with underscore
-    const formattedContentName = contentName.trim().replace(/\s/g, "-");
+    // contentName cannot be duplicated for a user
+    const foundContent = await ContentModel.findOne({
+      contentName: contentName.trim(),
+      author: req.user,
+    });
 
+    if (foundContent) {
+      res.status(409); // conflict
+      throw new Error("Content name already exists");
+    }
+
+    // save the data to the database
     const contentData = {
-      contentName: formattedContentName,
+      contentName: contentName.trim(),
       contentType: contentFile.mimetype,
       contentImage: contentImage.path,
       contentFile: contentFile.path,
@@ -29,32 +38,26 @@ const createContent = asyncHandler(async (req, res) => {
       author: req.user,
     };
 
-    // save the data to the database
-    try {
-      const newContent = new ContentModel(contentData);
-      await newContent.save();
+    const newContent = new ContentModel(contentData);
+    await newContent.save();
 
-      res.status(201);
-      res.send({ msg: "Content added to the system" });
-    } catch (err) {
-      if (err.name === "MongoServerError" && err.code === 11000) {
-        res.status(409); // conflict
-        throw new Error("Content name already exists");
-      } else {
-        throw new Error(err);
-      }
-    }
+    res.status(201);
+    res.send({ msg: "Content added to the system" });
   } catch (err) {
     console.error(err.message);
 
     // remove the files if an error occurs
     try {
-      contentStorage._removeFile(null, contentFile, () => {});
+      contentFile &&
+        contentFile.path &&
+        contentStorage._removeFile(null, contentFile, () => {});
     } catch (err) {
       console.error("Remove content file - " + err);
     }
     try {
-      contentStorage._removeFile(null, contentImage, () => {});
+      contentImage &&
+        contentImage.path &&
+        contentStorage._removeFile(null, contentImage, () => {});
     } catch (err) {
       console.error("Remove content image - " + err);
     }

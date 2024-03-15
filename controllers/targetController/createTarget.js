@@ -16,36 +16,37 @@ const createTarget = asyncHandler(async (req, res) => {
       throw new Error("Description is required");
     }
 
-    // remove starting and ending spaces and replace spaces with underscore
-    const formattedTargetName = targetName.trim().replace(/\s/g, "-");
+    // targetName cannot be duplicated for a user
+    const foundTarget = await TargetModel.findOne({
+      targetName: targetName.trim(),
+      author: req.user,
+    });
 
+    if (foundTarget) {
+      res.status(409); // conflict
+      throw new Error("Target name already exists");
+    }
+
+    // save the data to the database
     const targetData = {
-      targetName: formattedTargetName,
+      targetName: targetName.trim(),
       description: description,
       targetImage: targetImage.path,
       author: req.user,
     };
 
-    // save the data to the database
-    try {
-      const newTarget = new TargetModel(targetData);
-      await newTarget.save();
+    const newTarget = new TargetModel(targetData);
+    await newTarget.save();
 
-      res.status(201);
-      res.send({ msg: "Target added to the system" });
-    } catch (err) {
-      if (err.name === "MongoServerError" && err.code === 11000) {
-        res.status(409); // conflict
-        throw new Error("Target name already exists");
-      } else {
-        throw new Error(err);
-      }
-    }
+    res.status(201);
+    res.send({ msg: "Target added to the system" });
   } catch (err) {
     console.error(err.message);
 
     try {
-      targetStorage._removeFile(null, targetImage, () => {});
+      targetImage &&
+        targetImage.path &&
+        targetStorage._removeFile(null, targetImage, () => {});
     } catch (err) {
       console.error("Remove target image - " + err);
     }

@@ -14,6 +14,7 @@ import connectDB from "./config/dbConnection.js";
 import targetRoute from "./routes/targetRoutes.js";
 import contentRoute from "./routes/contentRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import sceneRoute from "./routes/sceneRoutes.js";
 
 const corsOptions = import("./config/corsOptions.js");
 
@@ -61,6 +62,9 @@ app.use("/api/targets", targetRoute);
 
 // Content Routes
 app.use("/api/contents", contentRoute);
+
+// Scene Routes
+app.use("/api/scenes", sceneRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello WebAR-CMS API!");

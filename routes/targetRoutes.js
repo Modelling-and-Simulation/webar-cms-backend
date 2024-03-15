@@ -2,8 +2,10 @@ import express from "express";
 
 // controllers
 import createTarget from "../controllers/targetController/createTarget.js";
-import getAllTargets from "../controllers/targetController/getAllTargets.js";
-import getTargetByName from "../controllers/targetController/getTargetByName.js";
+import {
+  getAllTargets,
+  getTargetByName,
+} from "../controllers/targetController/getTargets.js";
 
 // middleware
 import verifyRoles from "../middleware/verifyRoles.js";

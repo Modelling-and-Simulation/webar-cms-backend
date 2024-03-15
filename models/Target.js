@@ -7,7 +7,6 @@ const targetSchema = new Schema({
   targetName: {
     type: String,
     required: true,
-    unique: true,
   },
   description: {
     type: String,

@@ -4,7 +4,7 @@ import { contentStorage } from "../config/multerStorage.js";
 
 // controllers
 import createContent from "../controllers/contentController/createContent.js";
-import getAllContents from "../controllers/contentController/getAllContents.js";
+import { getAllContents } from "../controllers/contentController/getContents.js";
 
 // util
 import { validateFileExt } from "../util/validate.js";
@@ -36,11 +36,11 @@ contentRoute.post(
         if (!contentImage) {
           throw new Error("No image uploaded");
         } else if (!contentFile) {
-          throw new Error("No model file uploaded");
+          throw new Error("No content file uploaded");
         } else if (!validateFileExt(contentImage, ACCEPTED_IMAGE_FILE_TYPES)) {
           throw new Error("Invalid image type");
         } else if (!validateFileExt(contentFile, ACCEPTED_CONTENT_FILE_TYPES)) {
-          throw new Error("Invalid model file type");
+          throw new Error("Invalid content file type");
         }
       } catch (err) {
         // remove the files if an error occurs
@@ -49,14 +49,14 @@ contentRoute.post(
             contentStorage._removeFile(null, file, () => {})
           );
         } catch (err) {
-          console.error("Remove content images - " + err);
+          console.error("Remove content image - " + err);
         }
         try {
           contentFile.forEach((file) =>
             contentStorage._removeFile(null, file, () => {})
           );
         } catch (err) {
-          console.error("Remove model files - " + err);
+          console.error("Remove content file - " + err);
         }
         next(err);
       }

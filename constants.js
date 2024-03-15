@@ -7,10 +7,6 @@ export const USER_COLLECTION = process.env.USER + "_users";
 export const LINKING_COLLECTION = process.env.USER + "_linking";
 export const SCENE_COLLECTION = process.env.USER + "_scenes";
 
-export const IMAGE_FILE_NAME = "targetImage";
-export const MIND_FILE_NAME = "mindFile";
-export const MODEL_FILE_NAME = "model";
-
 export const ACCEPTED_IMAGE_FILE_TYPES = ["png", "jpg", "jpeg", "webp"];
 export const ACCEPTED_TARGET_FILE_TYPES = ["mind"];
 export const ACCEPTED_CONTENT_FILE_TYPES = ["glb"];

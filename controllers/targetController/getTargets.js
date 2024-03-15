@@ -1,11 +1,19 @@
 import asyncHandler from "express-async-handler";
 import TargetModel from "../../models/Target.js";
 
+const getAllTargets = asyncHandler(async (req, res) => {
+  const targets = await TargetModel.find({
+    author: req.user,
+  });
+  res.status(200).send(targets);
+});
+
 const getTargetByName = asyncHandler(async (req, res) => {
   const targetName = req.params.targetName;
-  const target = await TargetModel.findOne({ targetName: targetName }).select(
-    "-__v -_id"
-  );
+  const target = await TargetModel.findOne({
+    targetName: targetName,
+    author: req.user,
+  }).select("-__v -_id");
   if (target) {
     res.status(200).send(target);
   } else {
@@ -14,4 +22,4 @@ const getTargetByName = asyncHandler(async (req, res) => {
   }
 });
 
-export default getTargetByName;
+export { getAllTargets, getTargetByName };
