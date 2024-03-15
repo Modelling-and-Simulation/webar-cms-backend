@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import TargetModel from "../../models/Target.js";
 
-const getAllTargets = asyncHandler(async (req, res) => {
+const getTargets = asyncHandler(async (req, res) => {
   const targets = await TargetModel.find({
     author: req.user,
   });
@@ -22,4 +22,4 @@ const getTargetByName = asyncHandler(async (req, res) => {
   }
 });
 
-export { getAllTargets, getTargetByName };
+export { getTargets, getTargetByName };

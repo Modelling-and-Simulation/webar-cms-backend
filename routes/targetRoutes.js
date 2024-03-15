@@ -3,7 +3,7 @@ import express from "express";
 // controllers
 import createTarget from "../controllers/targetController/createTarget.js";
 import {
-  getAllTargets,
+  getTargets,
   getTargetByName,
 } from "../controllers/targetController/getTargets.js";
 
@@ -22,7 +22,7 @@ targetRoute.post(
   createTarget
 );
 
-targetRoute.get("/", getAllTargets);
+targetRoute.get("/", getTargets);
 
 targetRoute.get("/:targetName", getTargetByName);
 

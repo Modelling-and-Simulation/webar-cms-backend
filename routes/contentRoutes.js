@@ -4,7 +4,7 @@ import { contentStorage } from "../config/multerStorage.js";
 
 // controllers
 import createContent from "../controllers/contentController/createContent.js";
-import { getAllContents } from "../controllers/contentController/getContents.js";
+import { getContents } from "../controllers/contentController/getContents.js";
 
 // util
 import { validateFileExt } from "../util/validate.js";
@@ -66,6 +66,6 @@ contentRoute.post(
   },
   createContent
 );
-contentRoute.get("/", getAllContents);
+contentRoute.get("/", getContents);
 
 export default contentRoute;
