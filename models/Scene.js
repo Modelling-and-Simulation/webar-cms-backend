@@ -21,15 +21,15 @@ const sceneSchema = new Schema({
     type: String,
     required: true,
   },
-  targetAndContents: {
+  targetsAndContents: {
     type: [
       {
-        targetId: {
+        target: {
           type: Schema.Types.ObjectId,
           ref: TARGET_COLLECTION,
           required: true,
         },
-        contentId: {
+        content: {
           type: Schema.Types.ObjectId,
           ref: CONTENT_COLLECTION,
           required: true,

@@ -41,7 +41,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email,
       phoneNumber,
       password: hashedPassword,
-      role: role ? role : ROLES_LIST.Customer,
+      role: role ? role : ROLES_LIST.RegisteredUser,
     });
 
     await newUser.save();

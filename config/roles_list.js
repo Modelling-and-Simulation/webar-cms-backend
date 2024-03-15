@@ -1,7 +1,7 @@
 const ROLES_LIST = {
   Admin: 5150,
   Staff: 1984,
-  Customer: 2001,
+  RegisteredUser: 2001,
   Public: 0,
 };
 

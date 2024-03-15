@@ -17,7 +17,7 @@ const targetRoute = express.Router();
 
 targetRoute.post(
   "/",
-  verifyRoles(ROLES_LIST.Customer),
+  verifyRoles(ROLES_LIST.RegisteredUser),
   validateTargetImageupload,
   createTarget
 );

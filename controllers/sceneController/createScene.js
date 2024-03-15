@@ -3,7 +3,7 @@ import SceneModel from "../../models/Scene.js";
 import { mindFileStorage } from "../../config/multerStorage.js";
 
 const createScene = asyncHandler(async (req, res) => {
-  const { sceneName, description, targetAndContents } = req.body;
+  const { sceneName, description, targetsAndContents } = req.body;
   const files = req.files;
   const mindFile = files.mindFile[0];
 
@@ -14,7 +14,7 @@ const createScene = asyncHandler(async (req, res) => {
     } else if (description === undefined || description === "") {
       res.status(400);
       throw new Error("Description is required");
-    } else if (targetAndContents === undefined || targetAndContents.length === 0) {
+    } else if (targetsAndContents === undefined || targetsAndContents.length === 0) {
       res.status(400);
       throw new Error("Targets and contents are required");
     }
@@ -41,7 +41,7 @@ const createScene = asyncHandler(async (req, res) => {
       sceneName: formattedSceneName,
       description: description,
       mindFile: mindFile.path,
-      targetAndContents: JSON.parse(targetAndContents), // targetAndContents is an array of target and content ids
+      targetsAndContents: JSON.parse(targetsAndContents), // targetsAndContents is an array of target and content ids
       author: req.user,
     };
 

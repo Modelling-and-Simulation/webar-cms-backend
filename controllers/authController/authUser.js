@@ -15,26 +15,19 @@ const authUser = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
   console.log(`cookie available at login: ${JSON.stringify(cookies)}`);
 
-  const { username, email, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!username && !email) {
+  if (!username) {
     res.status(400);
-    throw new Error("Username or Email is required");
+    throw new Error("Username is required");
   } else if (!password) {
     res.status(400);
     throw new Error("Password is required");
   }
 
-  let user;
-  if (username) {
-    user = await UserModel.findOne({
-      username: username,
-    });
-  } else if (email) {
-    user = await UserModel.findOne({
-      email: email,
-    });
-  }
+  const user = await UserModel.findOne({
+    username: username,
+  });
 
   if (!user) {
     res.status(401); // Unauthorized
@@ -97,7 +90,7 @@ const authUser = asyncHandler(async (req, res) => {
   });
 
   res.status(200);
-  res.send({ roleName, accessToken });
+  res.send({ roleName, accessToken, name: user.name });
 });
 
 export default authUser;

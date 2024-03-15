@@ -7,14 +7,14 @@ const getScenes = asyncHandler(async (req, res) => {
     author: req.user,
   });
 
-  // populate targetId and contentId in targetAndContents array with their respective documents
+  // populate targetId and contentId in targetsAndContents array with their respective documents
   scenes = await SceneModel.populate(scenes, {
-    path: "targetAndContents.targetId",
+    path: "targetsAndContents.target",
     select: "targetName description targetImage",
   });
 
   await SceneModel.populate(scenes, {
-    path: "targetAndContents.contentId",
+    path: "targetsAndContents.content",
     select: "contentName description contentType contentFile contentImage",
   });
 
@@ -41,13 +41,13 @@ const getSceneByUrl = asyncHandler(async (req, res) => {
 
   console.log(scene);
   if (scene) {
-    // populate targetId and contentId in targetAndContents array with their respective documents
+    // populate targetId and contentId in targetsAndContents array with their respective documents
     await scene.populate(
-      "targetAndContents.targetId",
+      "targetsAndContents.target",
       "targetName description targetImage"
     );
     await scene.populate(
-      "targetAndContents.contentId",
+      "targetsAndContents.content",
       "contentName description contentType contentFile contentImage"
     );
 

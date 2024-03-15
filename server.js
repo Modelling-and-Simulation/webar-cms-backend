@@ -8,6 +8,7 @@ import verifyJWT from "./middleware/verifyJWT.js";
 import errorHandler from "./middleware/errorHandler.js";
 import credentials from "./middleware/credentials.js";
 
+import allowedOrigins from "./config/allowedOrigins.js";
 import connectDB from "./config/dbConnection.js";
 
 // import routes
@@ -22,12 +23,28 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-// Handle options credentials check - before CORS!
-// and fetch cookies credentials requirement
-app.use(credentials);
+app.options("*", (req, res) => {
+  // Pre-flight request. Reply successfully:
+  const origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin)) {
+    console.log("Pre-flight request", origin);
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+  }
+  res.status(200).send();
+});
 
 // Cross-Origin Resource Sharing (CORS)
 app.use(cors(corsOptions));
+app.use(credentials);
 
 // ‘content-type: application/x-www-form-urlencoded’
 app.use(express.urlencoded({ extended: false }));
