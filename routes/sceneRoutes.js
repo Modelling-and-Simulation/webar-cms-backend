@@ -4,12 +4,13 @@ const sceneRoute = express.Router();
 
 // controllers
 import createScene from "../controllers/sceneController/createScene.js";
+import deleteScene from "../controllers/sceneController/deleteScene.js";
+import { getScenes } from "../controllers/sceneController/getScenes.js";
 
 // middleware
 import verifyRoles from "../middleware/verifyRoles.js";
 import ROLES_LIST from "../config/roles_list.js";
 import validateMindFileUpload from "../middleware/fileValidations/validateMindFileUpload.js";
-import { getScenes } from "../controllers/sceneController/getScenes.js";
 
 sceneRoute.post(
   "/",
@@ -19,5 +20,7 @@ sceneRoute.post(
 );
 
 sceneRoute.get("/", getScenes);
+
+sceneRoute.delete("/:id", deleteScene);
 
 export default sceneRoute;

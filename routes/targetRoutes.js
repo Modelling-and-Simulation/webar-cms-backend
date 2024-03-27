@@ -2,6 +2,7 @@ import express from "express";
 
 // controllers
 import createTarget from "../controllers/targetController/createTarget.js";
+import deleteTarget from "../controllers/targetController/deleteTarget.js";
 import {
   getTargets,
   getTargetByName,
@@ -25,5 +26,7 @@ targetRoute.post(
 targetRoute.get("/", getTargets);
 
 targetRoute.get("/:targetName", getTargetByName);
+
+targetRoute.delete("/:id", deleteTarget);
 
 export default targetRoute;
