@@ -16,6 +16,7 @@ import targetRoute from "./routes/targetRoutes.js";
 import contentRoute from "./routes/contentRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import sceneRoute from "./routes/sceneRoutes.js";
+import { getSceneByUrl } from "./controllers/sceneController/getScenes.js";
 
 const corsOptions = import("./config/corsOptions.js");
 
@@ -71,6 +72,9 @@ app.use("/public", express.static("public"));
 
 // Auth Routes
 app.use("/api/auth", authRoutes);
+
+// Public scene routes
+app.use("/api/public/:authorUsername/:sceneName", getSceneByUrl);
 
 // Auth Middleware
 app.use(verifyJWT);

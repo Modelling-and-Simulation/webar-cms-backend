@@ -41,6 +41,7 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
   );
 
   // evaluate the refresh token
+  try{
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
@@ -89,9 +90,13 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
         maxAge: COOKIE_EXPIRY,
       });
 
-      res.json({ accessToken, roleName });
+      res.json({ accessToken, roleName, username: foundUser.username });
     }
   );
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(403);
+  }
 });
 
 export default handleRefreshToken;

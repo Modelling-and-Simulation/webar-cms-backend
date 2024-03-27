@@ -9,7 +9,7 @@ import createScene from "../controllers/sceneController/createScene.js";
 import verifyRoles from "../middleware/verifyRoles.js";
 import ROLES_LIST from "../config/roles_list.js";
 import validateMindFileUpload from "../middleware/fileValidations/validateMindFileUpload.js";
-import { getSceneByUrl, getScenes } from "../controllers/sceneController/getScenes.js";
+import { getScenes } from "../controllers/sceneController/getScenes.js";
 
 sceneRoute.post(
   "/",
@@ -19,7 +19,5 @@ sceneRoute.post(
 );
 
 sceneRoute.get("/", getScenes);
-
-sceneRoute.get("/:authorUsername/:sceneName", getSceneByUrl);
 
 export default sceneRoute;
