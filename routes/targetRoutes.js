@@ -3,6 +3,7 @@ import express from "express";
 // controllers
 import createTarget from "../controllers/targetController/createTarget.js";
 import deleteTarget from "../controllers/targetController/deleteTarget.js";
+import editTarget from "../controllers/targetController/editTarget.js";
 import {
   getTargets,
   getTargetByName,
@@ -28,5 +29,7 @@ targetRoute.get("/", getTargets);
 targetRoute.get("/:targetName", getTargetByName);
 
 targetRoute.delete("/:id", deleteTarget);
+
+targetRoute.put("/:id", editTarget);
 
 export default targetRoute;
