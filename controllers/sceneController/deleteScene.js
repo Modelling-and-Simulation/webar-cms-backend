@@ -11,7 +11,10 @@ const deleteScene = asyncHandler(async (req, res) => {
   }
 
   try {
-    const foundScene = await SceneModel.findByIdAndDelete(sceneId);
+    const foundScene = await SceneModel.findOneAndDelete({
+      _id: sceneId,
+      author: req.user,
+    });
 
     if (!foundScene) {
       res.status(404);

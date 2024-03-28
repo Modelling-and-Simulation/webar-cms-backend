@@ -11,8 +11,11 @@ const deleteTarget = asyncHandler(async (req, res) => {
   }
 
   try {
-    const foundTarget = await TargetModel.findByIdAndDelete(targetId);
-
+    const foundTarget = await TargetModel.findOneAndDelete({
+      _id: targetId,
+      author: req.user,
+    })
+    
     if (!foundTarget) {
       res.status(404);
       throw new Error("Target not found");

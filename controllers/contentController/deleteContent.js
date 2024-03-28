@@ -11,7 +11,10 @@ const deleteContent = asyncHandler(async (req, res) => {
   }
 
   try {
-    const foundContent = await ContentModel.findByIdAndDelete(contentId);
+    const foundContent = await ContentModel.findOneAndDelete({
+      _id: contentId,
+      author: req.user,
+    });
 
     if (!foundContent) {
       res.status(404);
