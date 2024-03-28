@@ -16,6 +16,7 @@ import targetRoute from "./routes/targetRoutes.js";
 import contentRoute from "./routes/contentRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import sceneRoute from "./routes/sceneRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import { getSceneByUrl } from "./controllers/sceneController/getScenes.js";
 
 const corsOptions = import("./config/corsOptions.js");
@@ -86,6 +87,9 @@ app.use("/api/contents", contentRoute);
 
 // Scene Routes
 app.use("/api/scenes", sceneRoute);
+
+// User Routes
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello WebAR-CMS API!");
