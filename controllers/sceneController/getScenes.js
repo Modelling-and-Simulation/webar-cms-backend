@@ -37,9 +37,8 @@ const getSceneByUrl = asyncHandler(async (req, res) => {
   const scene = await SceneModel.findOne({
     author: authorExists._id,
     sceneName: sceneName,
-  }).select("-__v -_id");
+  });
 
-  console.log(scene);
   if (scene) {
     // populate targetId and contentId in targetsAndContents array with their respective documents
     await scene.populate(
@@ -50,6 +49,14 @@ const getSceneByUrl = asyncHandler(async (req, res) => {
       "targetsAndContents.content",
       "contentName description contentType contentFile contentImage"
     );
+
+    // increase scene views
+    try {
+      scene.views += 1;
+      await scene.save();
+    } catch (error) {
+      console.log("Error in increasing views", error.message);
+    }
 
     res.status(200).send(scene);
   } else {

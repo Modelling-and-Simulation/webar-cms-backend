@@ -72,6 +72,10 @@ const sceneSchema = new Schema({
     ],
     default: [],
   },
+  views: {
+    type: Number,
+    default: 0,
+  },
   isEnabled: {
     type: Boolean,
     default: true,
