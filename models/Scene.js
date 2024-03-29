@@ -100,10 +100,15 @@ sceneSchema.pre("save", function (next) {
   next();
 });
 
-sceneSchema.pre("updateOne", function (next) {
-  this.updatedAt = Date.now();
-  next();
-});
+/****
+ * updateOne has used to update scene views
+ * so, updatedAt will be updated when scene views are updated
+ * uncomment below code if you want to update updatedAt when scene views are updated
+ *****/
+// sceneSchema.pre("updateOne", function (next) {
+//   this.updatedAt = Date.now();
+//   next();
+// });
 
 const SceneModel = mongoose.model(SCENE_COLLECTION, sceneSchema);
 

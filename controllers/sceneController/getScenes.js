@@ -52,8 +52,7 @@ const getSceneByUrl = asyncHandler(async (req, res) => {
 
     // increase scene views
     try {
-      scene.views += 1;
-      await scene.save();
+      await SceneModel.updateOne({ _id: scene._id }, { $inc: { views: 1 } });
     } catch (error) {
       console.log("Error in increasing views", error.message);
     }
