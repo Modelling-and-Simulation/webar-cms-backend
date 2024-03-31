@@ -41,58 +41,63 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
   );
 
   // evaluate the refresh token
-  try{
-  jwt.verify(
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET,
-    async (err, decoded) => {
-      if (err) {
-        console.log("Expired refresh token");
-        foundUser.refreshToken = [...newRefreshTokenArray];
-        await foundUser.save();
-      }
+  try {
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      async (err, decoded) => {
+        if (err) {
+          console.log("Expired refresh token");
+          foundUser.refreshToken = [...newRefreshTokenArray];
+          await foundUser.save();
+        }
 
-      if (err || foundUser._id.toString() !== decoded.UserInfo.userId) {
-        return res.sendStatus(403);
-      }
+        if (err || foundUser._id.toString() !== decoded.UserInfo.userId) {
+          return res.sendStatus(403);
+        }
 
-      // generate new access token
-      const roleName = getRoleName(foundUser.role);
-      
-      const accessToken = jwt.sign(
-        {
-          UserInfo: {
-            userId: decoded.UserInfo.userId,
-            role: roleName,
+        // generate new access token
+        const roleName = getRoleName(foundUser.role);
+
+        const accessToken = jwt.sign(
+          {
+            UserInfo: {
+              userId: decoded.UserInfo.userId,
+              role: roleName,
+            },
           },
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: ACCESS_TOKEN_EXPIRY }
-      );
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: ACCESS_TOKEN_EXPIRY }
+        );
 
-      const newRefreshToken = jwt.sign(
-        {
-          UserInfo: {
-            userId: decoded.UserInfo.userId,
-            role: roleName,
+        const newRefreshToken = jwt.sign(
+          {
+            UserInfo: {
+              userId: decoded.UserInfo.userId,
+              role: roleName,
+            },
           },
-        },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: REFRESH_TOKEN_EXPIRY }
-      );
+          process.env.REFRESH_TOKEN_SECRET,
+          { expiresIn: REFRESH_TOKEN_EXPIRY }
+        );
 
-      foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-      await foundUser.save();
+        foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
 
-      // creates a cookie with the jwt token
-      res.cookie("jwt", newRefreshToken, {
-        ...JWT_COOKIE_OPTIONS,
-        maxAge: COOKIE_EXPIRY,
-      });
+        try {
+          await foundUser.save();
+        } catch (err) {
+          console.log("Error in saving user: ", err.message);
+        }
 
-      res.json({ accessToken, roleName, username: foundUser.username });
-    }
-  );
+        // creates a cookie with the jwt token
+        res.cookie("jwt", newRefreshToken, {
+          ...JWT_COOKIE_OPTIONS,
+          maxAge: COOKIE_EXPIRY,
+        });
+
+        res.json({ accessToken, roleName, username: foundUser.username });
+      }
+    );
   } catch (err) {
     console.log(err);
     res.sendStatus(403);
