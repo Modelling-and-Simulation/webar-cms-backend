@@ -42,6 +42,7 @@ const updateTransfromation = asyncHandler(async (req, res) => {
     target.position = position;
     target.rotation = rotation;
     target.scale = scale;
+    target.isTransformed = true;
 
     await foundScene.save();
 

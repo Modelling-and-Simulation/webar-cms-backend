@@ -66,6 +66,10 @@ const sceneSchema = new Schema({
           type: Number,
           default: 1,
         },
+        isTransformed: {
+          type: Boolean,
+          default: false,
+        },
         editedByStaff: String,
         confirmedByStaffAt: Date,
       },

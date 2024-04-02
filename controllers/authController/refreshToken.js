@@ -29,7 +29,11 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
         const hackedUser = await UserModel.findById(decoded.UserInfo.userId);
 
         hackedUser.refreshToken = [];
-        await hackedUser.save();
+        try {
+          await foundUser.save();
+        } catch (err) {
+          console.log("Error in saving user: ", err.message);
+        }
       }
     );
 
@@ -49,7 +53,11 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
         if (err) {
           console.log("Expired refresh token");
           foundUser.refreshToken = [...newRefreshTokenArray];
-          await foundUser.save();
+          try {
+            await foundUser.save();
+          } catch (err) {
+            console.log("Error in saving user: ", err.message);
+          }
         }
 
         if (err || foundUser._id.toString() !== decoded.UserInfo.userId) {

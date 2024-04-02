@@ -10,6 +10,7 @@ import updateTransfromation from "../controllers/sceneController/updateTransform
 import {
   getSceneById,
   getScenes,
+  getScenesForTransformation,
 } from "../controllers/sceneController/getScenes.js";
 
 // middleware
@@ -24,8 +25,13 @@ sceneRoute.post(
   createScene
 );
 
-sceneRoute.get("/", getScenes);
-sceneRoute.get("/:id", getSceneById);
+sceneRoute.get(
+  "/for-transformation",
+  verifyRoles(ROLES_LIST.Staff),
+  getScenesForTransformation
+);
+sceneRoute.get("/:id", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), getSceneById);
+sceneRoute.get("/", verifyRoles(ROLES_LIST.RegisteredUser), getScenes);
 
 sceneRoute.delete("/:id", deleteScene);
 
