@@ -30,7 +30,7 @@ sceneRoute.get(
   verifyRoles(ROLES_LIST.Staff),
   getScenesForTransformation
 );
-sceneRoute.get("/:id", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Staff), getSceneById);
+sceneRoute.get("/:id", getSceneById);
 sceneRoute.get("/", verifyRoles(ROLES_LIST.RegisteredUser), getScenes);
 
 sceneRoute.delete("/:id", deleteScene);
