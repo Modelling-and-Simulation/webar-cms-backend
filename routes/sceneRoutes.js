@@ -5,8 +5,11 @@ const sceneRoute = express.Router();
 // controllers
 import createScene from "../controllers/sceneController/createScene.js";
 import deleteScene from "../controllers/sceneController/deleteScene.js";
-import editScene from "../controllers/sceneController/editScene.js";
 import updateTransfromation from "../controllers/sceneController/updateTransformation.js";
+import {
+  editSceneNameAndDescription,
+  editSceneAll,
+} from "../controllers/sceneController/editScene.js";
 import {
   getSceneById,
   getScenes,
@@ -33,9 +36,15 @@ sceneRoute.get(
 sceneRoute.get("/:id", getSceneById);
 sceneRoute.get("/", verifyRoles(ROLES_LIST.RegisteredUser), getScenes);
 
-sceneRoute.delete("/:id", deleteScene);
+sceneRoute.delete("/:id", verifyRoles(ROLES_LIST.RegisteredUser), deleteScene);
 
-sceneRoute.put("/:id", editScene);
+sceneRoute.put("/:id", verifyRoles(ROLES_LIST.RegisteredUser), editSceneAll);
+sceneRoute.put(
+  "/name-and-description/:id",
+  verifyRoles(ROLES_LIST.RegisteredUser),
+  validateMindFileUpload,
+  editSceneNameAndDescription
+);
 sceneRoute.put("/transformation/:id", updateTransfromation);
 
 export default sceneRoute;
