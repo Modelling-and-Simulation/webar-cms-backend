@@ -38,11 +38,15 @@ sceneRoute.get("/", verifyRoles(ROLES_LIST.RegisteredUser), getScenes);
 
 sceneRoute.delete("/:id", verifyRoles(ROLES_LIST.RegisteredUser), deleteScene);
 
-sceneRoute.put("/:id", verifyRoles(ROLES_LIST.RegisteredUser), editSceneAll);
+sceneRoute.put(
+  "/:id",
+  verifyRoles(ROLES_LIST.RegisteredUser),
+  validateMindFileUpload,
+  editSceneAll
+);
 sceneRoute.put(
   "/name-and-description/:id",
   verifyRoles(ROLES_LIST.RegisteredUser),
-  validateMindFileUpload,
   editSceneNameAndDescription
 );
 sceneRoute.put("/transformation/:id", updateTransfromation);
