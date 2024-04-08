@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import SceneModel from "../../models/Scene.js";
+import { mindFileStorage } from "../../config/multerStorage.js";
 
 const editSceneNameAndDescription = asyncHandler(async (req, res) => {
   const { sceneName, description } = req.body;
