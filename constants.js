@@ -9,7 +9,11 @@ export const SCENE_COLLECTION = process.env.USER + "_scenes";
 
 export const ACCEPTED_IMAGE_FILE_TYPES = ["png", "jpg", "jpeg", "webp"];
 export const ACCEPTED_TARGET_FILE_TYPES = ["mind"];
-export const ACCEPTED_CONTENT_FILE_TYPES = ["glb"];
+export const ACCEPTED_CONTENT_FILE_TYPES = [
+  ...ACCEPTED_IMAGE_FILE_TYPES,
+  "mp4",
+  "glb",
+];
 
 export const ACCESS_TOKEN_EXPIRY = "15m";
 export const REFRESH_TOKEN_EXPIRY = "7d";
