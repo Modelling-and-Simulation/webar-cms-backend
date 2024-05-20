@@ -17,7 +17,7 @@ const userRoutes = express.Router();
 
 userRoutes.post(
   "/registerStaff",
-  verifyRoles(ROLES_LIST.Admin),
+  // verifyRoles(ROLES_LIST.Admin),
   makeStaffUser,
   registerUser
 );

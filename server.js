@@ -65,7 +65,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Custom middleware for log all requests
 import { logger } from "./middleware/logEvents.js";
-app.use(logger);
+// app.use(logger);
 
 /****************** Routes ******************/
 // Public Files
