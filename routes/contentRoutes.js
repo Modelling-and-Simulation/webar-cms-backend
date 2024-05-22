@@ -7,6 +7,7 @@ import editContent from "../controllers/contentController/editContent.js";
 import { getContents } from "../controllers/contentController/getContents.js";
 
 import validateContentFileUpload from "../middleware/fileValidations/validateContentFileUpload.js";
+import { validateContentDelete } from "../middleware/validateDelete.js";
 
 const contentRoute = express.Router();
 
@@ -18,7 +19,7 @@ contentRoute.post(
 
 contentRoute.get("/", getContents);
 
-contentRoute.delete("/:id", deleteContent);
+contentRoute.delete("/:id", validateContentDelete, deleteContent);
 
 contentRoute.put("/:id", editContent);
 

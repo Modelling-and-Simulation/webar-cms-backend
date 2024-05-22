@@ -5,11 +5,6 @@ import { targetStorage } from "../../config/multerStorage.js";
 const deleteTarget = asyncHandler(async (req, res) => {
   const targetId = req.params.id;
 
-  if (!targetId) {
-    res.status(400);
-    throw new Error("Target ID is required");
-  }
-
   try {
     const foundTarget = await TargetModel.findOneAndDelete({
       _id: targetId,

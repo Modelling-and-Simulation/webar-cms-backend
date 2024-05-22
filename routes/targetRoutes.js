@@ -12,6 +12,7 @@ import {
 // middleware
 import verifyRoles from "../middleware/verifyRoles.js";
 import validateTargetImageupload from "../middleware/fileValidations/validateTargetImageupload.js";
+import { validateTargetDelete } from "../middleware/validateDelete.js";
 
 import ROLES_LIST from "../config/roles_list.js";
 
@@ -28,7 +29,7 @@ targetRoute.get("/", getTargets);
 
 targetRoute.get("/:targetName", getTargetByName);
 
-targetRoute.delete("/:id", deleteTarget);
+targetRoute.delete("/:id", validateTargetDelete, deleteTarget);
 
 targetRoute.put("/:id", editTarget);
 

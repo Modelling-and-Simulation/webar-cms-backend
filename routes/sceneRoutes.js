@@ -1,7 +1,5 @@
 import express from "express";
 
-const sceneRoute = express.Router();
-
 // controllers
 import createScene from "../controllers/sceneController/createScene.js";
 import deleteScene from "../controllers/sceneController/deleteScene.js";
@@ -20,6 +18,8 @@ import {
 import verifyRoles from "../middleware/verifyRoles.js";
 import ROLES_LIST from "../config/roles_list.js";
 import validateMindFileUpload from "../middleware/fileValidations/validateMindFileUpload.js";
+
+const sceneRoute = express.Router();
 
 sceneRoute.post(
   "/",
